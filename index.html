@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Shifa Hijama Center | Thérapie par Ventouses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#7B1C1C',
+        'primary-light': '#A52828',
+        gold: '#C9A227',
+        'gold-light': '#E4C060',
+        cream: '#FFF9F5',
+        'cream-dark': '#F5EDE6',
+        dark: '#1A0505',
+        'green-islam': '#1B4332',
+      },
+      fontFamily: {
+        heading: ['Lora', 'serif'],
+        body: ['Raleway', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { font-family: 'Raleway', sans-serif; }
+  h1, h2, h3 { font-family: 'Lora', serif; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .nav-tab { transition: all 200ms ease; }
+  .nav-tab.active {
+    color: #7B1C1C;
+    border-bottom: 2px solid #C9A227;
+  }
+
+  .card-hover {
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+  .card-hover:hover {
+    box-shadow: 0 12px 40px rgba(123,28,28,0.15);
+    transform: translateY(-3px);
+  }
+
+  .btn-primary {
+    background: #7B1C1C;
+    color: white;
+    transition: background 200ms ease, transform 150ms ease;
+  }
+  .btn-primary:hover {
+    background: #A52828;
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-gold {
+    background: #C9A227;
+    color: white;
+    transition: background 200ms ease;
+  }
+  .btn-gold:hover { background: #E4C060; }
+
+  .geometric-bg {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A227' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .timeslot { transition: all 150ms ease; cursor: pointer; }
+  .timeslot:hover { background: #FFF0E8; border-color: #C9A227; }
+  .timeslot.selected { background: #7B1C1C; color: white; border-color: #7B1C1C; }
+
+  .service-card { transition: all 200ms ease; cursor: pointer; }
+  .service-card:hover { border-color: #C9A227; background: #FFF5ED; }
+  .service-card.selected { border-color: #7B1C1C; background: #FFF0E8; }
+
+  .step { display: none; }
+  .step.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { animation: fadeIn 300ms ease forwards; }
+
+  .progress-step { transition: all 200ms ease; }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #C9A227;
+    box-shadow: 0 0 0 3px rgba(201,162,39,0.15);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body class="bg-cream text-dark">
+
+<!-- NAVBAR -->
+<nav class="fixed top-4 left-4 right-4 z-50 bg-white/95 backdrop-blur-md rounded-2xl shadow-lg border border-cream-dark px-4 md:px-8 py-3">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 0v18M3 12h18"/>
+        </svg>
+      </div>
+      <div>
+        <div class="font-heading font-bold text-primary text-lg leading-tight">Al-Shifa</div>
+        <div class="text-xs text-gray-500 font-body">Hijama Center</div>
+      </div>
+    </div>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex items-center gap-1">
+      <button onclick="showTab('accueil')" class="nav-tab active px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-primary cursor-pointer" data-tab="accueil">Accueil</button>
+      <button onclick="showTab('services')" class="nav-tab px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-primary cursor-pointer" data-tab="services">Services</button>
+      <button onclick="showTab('apropos')" class="nav-tab px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-primary cursor-pointer" data-tab="apropos">À Propos</button>
+      <button onclick="showTab('contact')" class="nav-tab px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-primary cursor-pointer" data-tab="contact">Contact</button>
+    </div>
+
+    <!-- CTA -->
+    <button onclick="showTab('reservation')" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer flex items-center gap-2">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+      </svg>
+      Réserver
+    </button>
+
+    <!-- Mobile Menu -->
+    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-cream cursor-pointer" onclick="toggleMobileMenu()">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div id="mobile-menu" class="md:hidden hidden mt-3 pt-3 border-t border-cream-dark">
+    <div class="flex flex-col gap-1 pb-2">
+      <button onclick="showTab('accueil'); toggleMobileMenu()" class="text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-cream hover:text-primary cursor-pointer">Accueil</button>
+      <button onclick="showTab('services'); toggleMobileMenu()" class="text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-cream hover:text-primary cursor-pointer">Services</button>
+      <button onclick="showTab('apropos'); toggleMobileMenu()" class="text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-cream hover:text-primary cursor-pointer">À Propos</button>
+      <button onclick="showTab('reservation'); toggleMobileMenu()" class="text-left px-4 py-2.5 rounded-lg text-sm font-medium text-primary font-semibold cursor-pointer">Réservation</button>
+      <button onclick="showTab('contact'); toggleMobileMenu()" class="text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-cream hover:text-primary cursor-pointer">Contact</button>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="pt-24 min-h-screen">
+
+  <!-- ===== ACCUEIL ===== -->
+  <div id="tab-accueil" class="tab-content active fade-in">
+
+    <!-- Hero -->
+    <section class="geometric-bg relative overflow-hidden py-20 md:py-32 px-4 md:px-8">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-full px-4 py-1.5 mb-6">
+            <div class="w-2 h-2 rounded-full bg-gold"></div>
+            <span class="text-sm font-medium text-gold font-body">Médecine Prophétique Authentique</span>
+          </div>
+          <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight mb-6">
+            Guérissez avec<br>
+            <span class="text-gold">la Hijama</span>
+          </h1>
+          <p class="text-gray-600 text-lg leading-relaxed mb-8 max-w-xl">
+            La thérapie par ventouses, pratiquée depuis des siècles, libère les toxines, améliore la circulation et restaure l'équilibre naturel de votre corps.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <button onclick="showTab('reservation')" class="btn-primary px-8 py-3.5 rounded-xl font-semibold text-base cursor-pointer flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              Prendre Rendez-vous
+            </button>
+            <button onclick="showTab('services')" class="px-8 py-3.5 rounded-xl border-2 border-primary text-primary font-semibold text-base cursor-pointer hover:bg-primary/5 transition-colors duration-200">
+              Nos Services
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-cream-dark card-hover">
+            <div class="text-4xl font-heading font-bold text-primary mb-1">+500</div>
+            <div class="text-sm text-gray-500">Patients traités</div>
+          </div>
+          <div class="bg-primary rounded-2xl p-6 shadow-sm card-hover">
+            <div class="text-4xl font-heading font-bold text-gold mb-1">10+</div>
+            <div class="text-sm text-white/80">Années d'expérience</div>
+          </div>
+          <div class="bg-gold rounded-2xl p-6 shadow-sm card-hover">
+            <div class="text-4xl font-heading font-bold text-white mb-1">98%</div>
+            <div class="text-sm text-white/80">Satisfaction client</div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-cream-dark card-hover">
+            <div class="text-4xl font-heading font-bold text-primary mb-1">100%</div>
+            <div class="text-sm text-gray-500">Matériel stérile</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services aperçu -->
+    <section class="py-20 px-4 md:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-14">
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">Nos Soins</h2>
+          <p class="text-gray-500 max-w-xl mx-auto">Chaque soin est adapté à vos besoins spécifiques avec des matériaux certifiés et stériles.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Service 1 -->
+          <div class="card-hover bg-cream rounded-2xl p-8 border border-cream-dark cursor-pointer" onclick="showTab('services')">
+            <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21a48.25 48.25 0 01-8.135-.687c-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/>
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-semibold text-primary mb-3">Hijama Sèche</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Ventouses sans incision pour améliorer la circulation et détendre les muscles en profondeur.</p>
+            <div class="mt-4 text-gold font-semibold text-sm flex items-center gap-1">
+              À partir de 40€
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Service 2 -->
+          <div class="card-hover bg-primary rounded-2xl p-8 cursor-pointer" onclick="showTab('services')">
+            <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-semibold text-white mb-3">Hijama Humide</h3>
+            <p class="text-white/70 text-sm leading-relaxed">La méthode traditionnelle prophétique avec petites incisions pour extraire le sang vicié et détoxifier l'organisme.</p>
+            <div class="mt-4 text-gold font-semibold text-sm flex items-center gap-1">
+              À partir de 70€
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Service 3 -->
+          <div class="card-hover bg-cream rounded-2xl p-8 border border-cream-dark cursor-pointer" onclick="showTab('services')">
+            <div class="w-14 h-14 bg-gold/10 rounded-2xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a1.125 1.125 0 001.384-.372l.376-.941"/>
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-semibold text-primary mb-3">Massage + Hijama</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Alliance parfaite du massage thérapeutique et des ventouses pour un soin holistique complet.</p>
+            <div class="mt-4 text-gold font-semibold text-sm flex items-center gap-1">
+              À partir de 95€
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bienfaits -->
+    <section class="py-20 px-4 md:px-8 geometric-bg">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-14">
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">Bienfaits de la Hijama</h2>
+          <p class="text-gray-500 max-w-xl mx-auto">Une thérapie ancienne aux bénéfices prouvés pour votre santé globale.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-cream-dark card-hover">
+            <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-primary mb-2">Détoxification</h4>
+            <p class="text-xs text-gray-500 leading-relaxed">Élimine les toxines accumulées dans le sang et les tissus</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-cream-dark card-hover">
+            <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-primary mb-2">Anti-douleur</h4>
+            <p class="text-xs text-gray-500 leading-relaxed">Soulage les douleurs chroniques, migraines et tensions musculaires</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-cream-dark card-hover">
+            <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-primary mb-2">Énergie</h4>
+            <p class="text-xs text-gray-500 leading-relaxed">Booste l'énergie vitale et améliore la qualité du sommeil</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-cream-dark card-hover">
+            <div class="w-12 h-12 bg-yellow-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-primary mb-2">Immunité</h4>
+            <p class="text-xs text-gray-500 leading-relaxed">Renforce les défenses immunitaires et prévient les maladies</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Témoignages -->
+    <section class="py-20 px-4 md:px-8 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-14">
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">Ce Que Disent Nos Patients</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-cream rounded-2xl p-7 border border-cream-dark card-hover">
+            <div class="flex gap-1 mb-4">
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="text-gray-600 text-sm leading-relaxed mb-5">"Après des années de douleurs dorsales chroniques, 3 séances de hijama humide ont changé ma vie. Je n'avais jamais ressenti un tel soulagement."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold font-heading">K</div>
+              <div>
+                <div class="font-semibold text-sm text-dark">Karim B.</div>
+                <div class="text-xs text-gray-400">Patient depuis 2023</div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-primary rounded-2xl p-7 card-hover">
+            <div class="flex gap-1 mb-4">
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed mb-5">"Praticien très professionnel, cadre propre et rassurant. La hijama sèche m'a aidée à gérer mon stress et mes migraines. Je recommande vivement !"</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-white font-semibold font-heading">S</div>
+              <div>
+                <div class="font-semibold text-sm text-white">Samira L.</div>
+                <div class="text-xs text-white/50">Patient depuis 2022</div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-cream rounded-2xl p-7 border border-cream-dark card-hover">
+            <div class="flex gap-1 mb-4">
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="w-4 h-4 text-gold fill-gold" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="text-gray-600 text-sm leading-relaxed mb-5">"J'avais des réticences au départ mais le praticien a pris le temps de tout expliquer. Résultat bluffant sur ma fatigue chronique. Merci !"</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-white font-semibold font-heading">Y</div>
+              <div>
+                <div class="font-semibold text-sm text-dark">Youssef M.</div>
+                <div class="text-xs text-gray-400">Patient depuis 2024</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="py-16 px-4 md:px-8 bg-primary">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Prêt à commencer votre guérison ?</h2>
+        <p class="text-white/70 mb-8 text-lg">Réservez votre première séance dès aujourd'hui. Consultation gratuite incluse.</p>
+        <button onclick="showTab('reservation')" class="btn-gold px-10 py-4 rounded-xl font-semibold text-lg cursor-pointer">
+          Réserver Maintenant
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== SERVICES ===== -->
+  <div id="tab-services" class="tab-content fade-in">
+    <section class="py-20 px-4 md:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-14">
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">Nos Services</h2>
+          <p class="text-gray-500 max-w-xl mx-auto">Des soins adaptés à chaque besoin, pratiqués avec rigueur et bienveillance.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Service détaillé 1 -->
+          <div class="bg-white rounded-3xl p-8 shadow-sm border border-cream-dark card-hover">
+            <div class="flex items-start gap-5">
+              <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21a48.25 48.25 0 01-8.135-.687c-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-heading text-xl font-bold text-primary">Hijama Sèche</h3>
+                  <span class="bg-gold/10 text-gold text-xs font-semibold px-3 py-1 rounded-full">40€ - 60€</span>
+                </div>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Ventouses placées sur la peau sans incision pour créer une succion. Idéale pour les débutants et les enfants. Améliore la circulation sanguine et lymphatique, réduit les inflammations.</p>
+                <ul class="space-y-2 mb-5">
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Durée : 30 à 45 minutes
+                  </li>
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Sans douleur, convient à tous
+                  </li>
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Recommandé 1x/mois
+                  </li>
+                </ul>
+                <button onclick="showTab('reservation')" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer">Réserver</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service détaillé 2 -->
+          <div class="bg-white rounded-3xl p-8 shadow-sm border border-cream-dark card-hover">
+            <div class="flex items-start gap-5">
+              <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-heading text-xl font-bold text-primary">Hijama Humide</h3>
+                  <span class="bg-gold/10 text-gold text-xs font-semibold px-3 py-1 rounded-full">70€ - 100€</span>
+                </div>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Méthode prophétique complète. Petites scarifications superficielles pour extraire le sang stagnant. Traitement de nombreuses pathologies : hypertension, diabète, douleurs chroniques.</p>
+                <ul class="space-y-2 mb-5">
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Durée : 45 à 60 minutes
+                  </li>
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Matériel stérile à usage unique
+                  </li>
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Recommandé les jours sunnah (17, 19, 21 lunaire)
+                  </li>
+                </ul>
+                <button onclick="showTab('reservation')" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer">Réserver</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service détaillé 3 -->
+          <div class="bg-white rounded-3xl p-8 shadow-sm border border-cream-dark card-hover">
+            <div class="flex items-start gap-5">
+              <div class="w-16 h-16 bg-gold/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a1.125 1.125 0 001.384-.372l.376-.941"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-heading text-xl font-bold text-primary">Massage + Hijama</h3>
+                  <span class="bg-gold/10 text-gold text-xs font-semibold px-3 py-1 rounded-full">95€ - 130€</span>
+                </div>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Combinaison optimale : massage thérapeutique à l'huile de nigelle suivi de la hijama. Maximise les bienfaits et offre une expérience de détente profonde et complète.</p>
+                <ul class="space-y-2 mb-5">
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Durée : 75 à 90 minutes
+                  </li>
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Huile de nigelle 100% pure
+                  </li>
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Résultats amplifiés
+                  </li>
+                </ul>
+                <button onclick="showTab('reservation')" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer">Réserver</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service détaillé 4 -->
+          <div class="bg-white rounded-3xl p-8 shadow-sm border border-cream-dark card-hover">
+            <div class="flex items-start gap-5">
+              <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-8 h-8 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-heading text-xl font-bold text-primary">Consultation + Bilan</h3>
+                  <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Gratuit</span>
+                </div>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Avant toute séance, nous réalisons un bilan complet de santé pour établir le protocole le mieux adapté à votre situation et vos objectifs.</p>
+                <ul class="space-y-2 mb-5">
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Durée : 20 minutes
+                  </li>
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Questionnaire médical confidentiel
+                  </li>
+                  <li class="flex items-center gap-2 text-xs text-gray-500">
+                    <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    Plan de soins personnalisé
+                  </li>
+                </ul>
+                <button onclick="showTab('reservation')" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer">Réserver</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== À PROPOS ===== -->
+  <div id="tab-apropos" class="tab-content fade-in">
+    <section class="py-20 px-4 md:px-8">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-16 items-center mb-20">
+          <div>
+            <div class="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-full px-4 py-1.5 mb-6">
+              <span class="text-sm font-medium text-gold">Notre histoire</span>
+            </div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary mb-6">Une passion pour la médecine prophétique</h2>
+            <p class="text-gray-600 leading-relaxed mb-4">Fondé en 2014, Al-Shifa Hijama Center est né de la conviction que la médecine prophétique offre des solutions naturelles et efficaces aux maux modernes.</p>
+            <p class="text-gray-600 leading-relaxed mb-6">Notre praticien principal, formé en Arabie Saoudite et certifié par l'Institut International de Hijama, combine tradition islamique et hygiène professionnelle de haut niveau.</p>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="text-center p-4 bg-cream rounded-2xl border border-cream-dark">
+                <div class="font-heading text-2xl font-bold text-primary">2014</div>
+                <div class="text-xs text-gray-500 mt-1">Fondation</div>
+              </div>
+              <div class="text-center p-4 bg-cream rounded-2xl border border-cream-dark">
+                <div class="font-heading text-2xl font-bold text-primary">500+</div>
+                <div class="text-xs text-gray-500 mt-1">Patients</div>
+              </div>
+              <div class="text-center p-4 bg-cream rounded-2xl border border-cream-dark">
+                <div class="font-heading text-2xl font-bold text-primary">3</div>
+                <div class="text-xs text-gray-500 mt-1">Certifications</div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-primary rounded-3xl p-8 text-white">
+            <div class="w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-center mb-2">Sheikh Ahmad Al-Rashid</h3>
+            <p class="text-gold text-sm text-center mb-5">Praticien Certifié — 10 ans d'expérience</p>
+            <ul class="space-y-3">
+              <li class="flex items-center gap-3 text-sm text-white/80">
+                <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                Certifié Institut International de Hijama (Riyad)
+              </li>
+              <li class="flex items-center gap-3 text-sm text-white/80">
+                <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                Formation en hygiène et stérilisation médicale
+              </li>
+              <li class="flex items-center gap-3 text-sm text-white/80">
+                <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                Membre de l'Association Française de Hijama
+              </li>
+              <li class="flex items-center gap-3 text-sm text-white/80">
+                <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                Intervenant en conférences médicales islamiques
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Valeurs -->
+        <div class="text-center mb-12">
+          <h2 class="font-heading text-3xl font-bold text-primary mb-4">Nos Engagements</h2>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-6">
+          <div class="text-center p-8 bg-white rounded-3xl border border-cream-dark shadow-sm card-hover">
+            <div class="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <svg class="w-7 h-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-primary mb-3">Hygiène Absolue</h4>
+            <p class="text-gray-500 text-sm leading-relaxed">Matériel 100% stérile à usage unique. Protocole d'hygiène médical rigoureux à chaque séance.</p>
+          </div>
+          <div class="text-center p-8 bg-white rounded-3xl border border-cream-dark shadow-sm card-hover">
+            <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <svg class="w-7 h-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-primary mb-3">Savoir Authentique</h4>
+            <p class="text-gray-500 text-sm leading-relaxed">Fondé sur les hadiths sahih et les connaissances médicales modernes. Pratique conforme à la Sunna.</p>
+          </div>
+          <div class="text-center p-8 bg-white rounded-3xl border border-cream-dark shadow-sm card-hover">
+            <div class="w-14 h-14 bg-yellow-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <svg class="w-7 h-7 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+              </svg>
+            </div>
+            <h4 class="font-heading font-semibold text-primary mb-3">Bienveillance</h4>
+            <p class="text-gray-500 text-sm leading-relaxed">Chaque patient est accueilli avec respect et écoute. Votre confort et votre sécurité sont notre priorité absolue.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== RÉSERVATION ===== -->
+  <div id="tab-reservation" class="tab-content fade-in">
+    <section class="py-20 px-4 md:px-8">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">Réserver une Séance</h2>
+          <p class="text-gray-500">Complétez les étapes ci-dessous pour confirmer votre rendez-vous.</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="flex items-center justify-center gap-0 mb-10">
+          <div class="flex items-center">
+            <div id="step-indicator-1" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold transition-all duration-200">1</div>
+            <div class="text-xs text-primary font-semibold ml-2 hidden sm:block">Service</div>
+          </div>
+          <div class="w-12 h-0.5 bg-cream-dark mx-2"></div>
+          <div class="flex items-center">
+            <div id="step-indicator-2" class="w-10 h-10 rounded-full bg-cream-dark text-gray-400 flex items-center justify-center text-sm font-bold transition-all duration-200">2</div>
+            <div class="text-xs text-gray-400 font-semibold ml-2 hidden sm:block">Date & Heure</div>
+          </div>
+          <div class="w-12 h-0.5 bg-cream-dark mx-2"></div>
+          <div class="flex items-center">
+            <div id="step-indicator-3" class="w-10 h-10 rounded-full bg-cream-dark text-gray-400 flex items-center justify-center text-sm font-bold transition-all duration-200">3</div>
+            <div class="text-xs text-gray-400 font-semibold ml-2 hidden sm:block">Vos Infos</div>
+          </div>
+          <div class="w-12 h-0.5 bg-cream-dark mx-2"></div>
+          <div class="flex items-center">
+            <div id="step-indicator-4" class="w-10 h-10 rounded-full bg-cream-dark text-gray-400 flex items-center justify-center text-sm font-bold transition-all duration-200">4</div>
+            <div class="text-xs text-gray-400 font-semibold ml-2 hidden sm:block">Confirmation</div>
+          </div>
+        </div>
+
+        <!-- Booking Card -->
+        <div class="bg-white rounded-3xl shadow-sm border border-cream-dark overflow-hidden">
+
+          <!-- Step 1: Service -->
+          <div id="booking-step-1" class="step active p-8">
+            <h3 class="font-heading text-xl font-bold text-primary mb-6">Choisissez votre soin</h3>
+            <div class="space-y-4">
+              <div class="service-card rounded-2xl border-2 border-cream-dark p-5 flex items-center gap-4" onclick="selectService(this, 'Hijama Sèche', '40€')">
+                <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-dark">Hijama Sèche</div>
+                  <div class="text-xs text-gray-500 mt-0.5">30-45 min · Sans incision · Idéal débutants</div>
+                </div>
+                <div class="text-primary font-bold">40€</div>
+              </div>
+
+              <div class="service-card rounded-2xl border-2 border-cream-dark p-5 flex items-center gap-4" onclick="selectService(this, 'Hijama Humide', '70€')">
+                <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-dark">Hijama Humide</div>
+                  <div class="text-xs text-gray-500 mt-0.5">45-60 min · Méthode prophétique complète</div>
+                </div>
+                <div class="text-primary font-bold">70€</div>
+              </div>
+
+              <div class="service-card rounded-2xl border-2 border-cream-dark p-5 flex items-center gap-4" onclick="selectService(this, 'Massage + Hijama', '95€')">
+                <div class="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-dark">Massage + Hijama</div>
+                  <div class="text-xs text-gray-500 mt-0.5">75-90 min · Soin holistique complet</div>
+                </div>
+                <div class="text-primary font-bold">95€</div>
+              </div>
+
+              <div class="service-card rounded-2xl border-2 border-cream-dark p-5 flex items-center gap-4" onclick="selectService(this, 'Consultation Bilan', 'Gratuit')">
+                <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-dark">Consultation Bilan</div>
+                  <div class="text-xs text-gray-500 mt-0.5">20 min · Premier rendez-vous · Gratuit</div>
+                </div>
+                <div class="text-green-600 font-bold">Gratuit</div>
+              </div>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+              <button id="step1-next" onclick="goToStep(2)" disabled class="btn-primary px-8 py-3 rounded-xl font-semibold cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none">
+                Suivant →
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Date & Heure -->
+          <div id="booking-step-2" class="step p-8">
+            <h3 class="font-heading text-xl font-bold text-primary mb-6">Choisissez une date et une heure</h3>
+
+            <!-- Date Picker -->
+            <div class="mb-6">
+              <label for="booking-date" class="block text-sm font-medium text-dark mb-2">Date souhaitée</label>
+              <input type="date" id="booking-date" onchange="loadTimeSlots()" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200" min="">
+            </div>
+
+            <!-- Time Slots -->
+            <div id="timeslots-container" class="hidden">
+              <label class="block text-sm font-medium text-dark mb-3">Créneaux disponibles</label>
+              <div id="timeslots-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+            </div>
+
+            <div id="no-date-msg" class="text-center py-8 text-gray-400 text-sm">
+              Veuillez sélectionner une date pour voir les créneaux disponibles.
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button onclick="goToStep(1)" class="px-6 py-3 rounded-xl border-2 border-cream-dark text-gray-500 font-semibold cursor-pointer hover:bg-cream transition-colors duration-200">
+                ← Retour
+              </button>
+              <button id="step2-next" onclick="goToStep(3)" disabled class="btn-primary px-8 py-3 rounded-xl font-semibold cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none">
+                Suivant →
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Infos personnelles -->
+          <div id="booking-step-3" class="step p-8">
+            <h3 class="font-heading text-xl font-bold text-primary mb-6">Vos coordonnées</h3>
+            <div class="space-y-5">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="b-prenom" class="block text-sm font-medium text-dark mb-2">Prénom *</label>
+                  <input type="text" id="b-prenom" placeholder="Votre prénom" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200">
+                </div>
+                <div>
+                  <label for="b-nom" class="block text-sm font-medium text-dark mb-2">Nom *</label>
+                  <input type="text" id="b-nom" placeholder="Votre nom" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200">
+                </div>
+              </div>
+              <div>
+                <label for="b-tel" class="block text-sm font-medium text-dark mb-2">Téléphone *</label>
+                <input type="tel" id="b-tel" placeholder="+33 6 xx xx xx xx" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200">
+              </div>
+              <div>
+                <label for="b-email" class="block text-sm font-medium text-dark mb-2">Email *</label>
+                <input type="email" id="b-email" placeholder="votre@email.com" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200">
+              </div>
+              <div>
+                <label for="b-genre" class="block text-sm font-medium text-dark mb-2">Genre</label>
+                <select id="b-genre" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200 cursor-pointer">
+                  <option value="">Sélectionner</option>
+                  <option value="homme">Homme (Praticien masculin)</option>
+                  <option value="femme">Femme (Praticienne féminine)</option>
+                </select>
+              </div>
+              <div>
+                <label for="b-notes" class="block text-sm font-medium text-dark mb-2">Notes médicales (optionnel)</label>
+                <textarea id="b-notes" rows="3" placeholder="Allergies, traitements en cours, zones sensibles..." class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200 resize-none"></textarea>
+              </div>
+            </div>
+            <div class="mt-8 flex justify-between">
+              <button onclick="goToStep(2)" class="px-6 py-3 rounded-xl border-2 border-cream-dark text-gray-500 font-semibold cursor-pointer hover:bg-cream transition-colors duration-200">
+                ← Retour
+              </button>
+              <button onclick="submitBooking()" class="btn-primary px-8 py-3 rounded-xl font-semibold cursor-pointer flex items-center gap-2">
+                <span id="submit-text">Confirmer la réservation</span>
+                <svg id="submit-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 4: Confirmation -->
+          <div id="booking-step-4" class="step p-8 text-center">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <h3 class="font-heading text-2xl font-bold text-primary mb-3">Réservation Confirmée !</h3>
+            <p class="text-gray-500 mb-6" id="confirm-message">Votre rendez-vous a bien été enregistré. Vous recevrez un SMS de confirmation sous peu.</p>
+            <div id="confirm-summary" class="bg-cream rounded-2xl p-6 text-left mb-8 border border-cream-dark">
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between"><span class="text-gray-500">Service</span><span id="cs-service" class="font-semibold text-dark"></span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Date</span><span id="cs-date" class="font-semibold text-dark"></span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Heure</span><span id="cs-heure" class="font-semibold text-dark"></span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Tarif</span><span id="cs-prix" class="font-semibold text-primary"></span></div>
+              </div>
+            </div>
+            <div class="bg-gold/10 border border-gold/30 rounded-2xl p-4 text-sm text-gold-dark mb-6">
+              <strong>Rappel :</strong> Veuillez vous abstenir de manger les 2-3h avant votre séance. Habillez-vous confortablement.
+            </div>
+            <button onclick="resetBooking()" class="btn-primary px-8 py-3 rounded-xl font-semibold cursor-pointer">
+              Nouvelle Réservation
+            </button>
+          </div>
+        </div>
+
+        <!-- Side Info -->
+        <div class="mt-8 grid sm:grid-cols-3 gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-cream-dark flex items-start gap-3">
+            <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+            </svg>
+            <div>
+              <div class="font-semibold text-sm text-dark">Annulation gratuite</div>
+              <div class="text-xs text-gray-400 mt-0.5">Jusqu'à 24h avant</div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-cream-dark flex items-start gap-3">
+            <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+            </svg>
+            <div>
+              <div class="font-semibold text-sm text-dark">Confirmation SMS</div>
+              <div class="text-xs text-gray-400 mt-0.5">Reçue immédiatement</div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-cream-dark flex items-start gap-3">
+            <svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+            </svg>
+            <div>
+              <div class="font-semibold text-sm text-dark">Paiement sur place</div>
+              <div class="text-xs text-gray-400 mt-0.5">Espèces ou carte</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== CONTACT ===== -->
+  <div id="tab-contact" class="tab-content fade-in">
+    <section class="py-20 px-4 md:px-8">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">Nous Contacter</h2>
+          <p class="text-gray-500 max-w-xl mx-auto">Une question ? Besoin d'un conseil ? Notre équipe vous répond rapidement.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10">
+          <!-- Infos -->
+          <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-7 border border-cream-dark shadow-sm">
+              <h3 class="font-heading text-lg font-bold text-primary mb-5">Informations Pratiques</h3>
+              <div class="space-y-5">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-sm text-dark">Adresse</div>
+                    <div class="text-sm text-gray-500 mt-0.5">15 Rue de la Paix, 75001 Paris<br>Métro : Opéra (Ligne 3, 7, 8)</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-sm text-dark">Téléphone</div>
+                    <div class="text-sm text-gray-500 mt-0.5">+33 1 23 45 67 89</div>
+                    <div class="text-xs text-gray-400">Lun-Sam : 9h-19h</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-sm text-dark">Email</div>
+                    <div class="text-sm text-gray-500 mt-0.5">contact@alshifa-hijama.fr</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Horaires -->
+            <div class="bg-white rounded-3xl p-7 border border-cream-dark shadow-sm">
+              <h3 class="font-heading text-lg font-bold text-primary mb-5">Horaires d'Ouverture</h3>
+              <div class="space-y-2.5">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Lundi – Vendredi</span>
+                  <span class="font-semibold text-dark">9h00 – 19h00</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Samedi</span>
+                  <span class="font-semibold text-dark">9h00 – 17h00</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Dimanche</span>
+                  <span class="font-semibold text-gray-400">Fermé</span>
+                </div>
+                <div class="mt-3 pt-3 border-t border-cream-dark text-xs text-gray-400">
+                  Les jours sunnah (17, 19, 21 du mois lunaire) sont prioritaires pour la hijama humide.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="bg-white rounded-3xl p-7 border border-cream-dark shadow-sm">
+            <h3 class="font-heading text-lg font-bold text-primary mb-5">Envoyer un Message</h3>
+            <form onsubmit="submitContact(event)" class="space-y-4">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="c-prenom" class="block text-sm font-medium text-dark mb-2">Prénom</label>
+                  <input type="text" id="c-prenom" required placeholder="Votre prénom" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200">
+                </div>
+                <div>
+                  <label for="c-nom" class="block text-sm font-medium text-dark mb-2">Nom</label>
+                  <input type="text" id="c-nom" required placeholder="Votre nom" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200">
+                </div>
+              </div>
+              <div>
+                <label for="c-email" class="block text-sm font-medium text-dark mb-2">Email</label>
+                <input type="email" id="c-email" required placeholder="votre@email.com" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200">
+              </div>
+              <div>
+                <label for="c-sujet" class="block text-sm font-medium text-dark mb-2">Sujet</label>
+                <select id="c-sujet" class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200 cursor-pointer">
+                  <option>Question sur un soin</option>
+                  <option>Contre-indications</option>
+                  <option>Tarifs & forfaits</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div>
+                <label for="c-message" class="block text-sm font-medium text-dark mb-2">Message</label>
+                <textarea id="c-message" rows="4" required placeholder="Votre message..." class="w-full border-2 border-cream-dark rounded-xl px-4 py-3 text-sm font-body bg-cream focus:outline-none transition-all duration-200 resize-none"></textarea>
+              </div>
+              <button type="submit" id="contact-submit" class="btn-primary w-full py-3.5 rounded-xl font-semibold cursor-pointer flex items-center justify-center gap-2">
+                <span id="contact-text">Envoyer le Message</span>
+              </button>
+              <div id="contact-success" class="hidden text-center text-green-600 text-sm font-medium py-2 bg-green-50 rounded-xl">
+                Message envoyé avec succès ! Nous vous répondons sous 24h.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-white py-12 px-4 md:px-8 mt-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 0v18M3 12h18"/>
+            </svg>
+          </div>
+          <div>
+            <div class="font-heading font-bold text-white text-lg">Al-Shifa Hijama Center</div>
+          </div>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed max-w-sm">Centre spécialisé en thérapie par ventouses, fondé sur les préceptes prophétiques et les normes d'hygiène modernes.</p>
+      </div>
+      <div>
+        <div class="font-semibold text-sm mb-4">Navigation</div>
+        <div class="space-y-2">
+          <button onclick="showTab('accueil')" class="block text-white/50 text-sm hover:text-gold transition-colors cursor-pointer">Accueil</button>
+          <button onclick="showTab('services')" class="block text-white/50 text-sm hover:text-gold transition-colors cursor-pointer">Services</button>
+          <button onclick="showTab('apropos')" class="block text-white/50 text-sm hover:text-gold transition-colors cursor-pointer">À Propos</button>
+          <button onclick="showTab('reservation')" class="block text-white/50 text-sm hover:text-gold transition-colors cursor-pointer">Réservation</button>
+          <button onclick="showTab('contact')" class="block text-white/50 text-sm hover:text-gold transition-colors cursor-pointer">Contact</button>
+        </div>
+      </div>
+      <div>
+        <div class="font-semibold text-sm mb-4">Contact</div>
+        <div class="space-y-2 text-white/50 text-sm">
+          <div>15 Rue de la Paix, Paris</div>
+          <div>+33 1 23 45 67 89</div>
+          <div>contact@alshifa-hijama.fr</div>
+          <div class="pt-1 text-xs">Lun-Ven : 9h-19h | Sam : 9h-17h</div>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/30 text-xs">
+      <div>© 2024 Al-Shifa Hijama Center. Tous droits réservés.</div>
+      <div>Pratique réservée aux majeurs · Matériel certifié CE</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== TAB NAVIGATION =====
+function showTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(el => {
+    el.classList.remove('active');
+  });
+  document.querySelectorAll('.nav-tab').forEach(el => {
+    el.classList.remove('active');
+  });
+
+  const target = document.getElementById('tab-' + tabName);
+  if (target) {
+    target.classList.add('active');
+    target.classList.remove('fade-in');
+    void target.offsetWidth;
+    target.classList.add('fade-in');
+  }
+
+  document.querySelectorAll('[data-tab="' + tabName + '"]').forEach(el => {
+    el.classList.add('active');
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('hidden');
+}
+
+// ===== BOOKING SYSTEM =====
+let selectedService = null;
+let selectedTime = null;
+let currentStep = 1;
+
+function selectService(el, name, price) {
+  document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedService = { name, price };
+  document.getElementById('step1-next').disabled = false;
+}
+
+function goToStep(n) {
+  document.getElementById('booking-step-' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('booking-step-' + n).classList.add('active');
+  updateStepIndicators(n);
+}
+
+function updateStepIndicators(n) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('step-indicator-' + i);
+    if (i < n) {
+      el.className = 'w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center text-sm font-bold transition-all duration-200';
+      el.innerHTML = '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    } else if (i === n) {
+      el.className = 'w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold transition-all duration-200';
+      el.textContent = i;
+    } else {
+      el.className = 'w-10 h-10 rounded-full bg-cream-dark text-gray-400 flex items-center justify-center text-sm font-bold transition-all duration-200';
+      el.textContent = i;
+    }
+  }
+}
+
+function loadTimeSlots() {
+  const date = document.getElementById('booking-date').value;
+  if (!date) return;
+
+  selectedTime = null;
+  document.getElementById('step2-next').disabled = true;
+
+  const allSlots = ['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00'];
+  const unavailable = ['10:00','14:30','16:00'];
+
+  const grid = document.getElementById('timeslots-grid');
+  grid.innerHTML = '';
+
+  allSlots.forEach(slot => {
+    const isUnavailable = unavailable.includes(slot);
+    const div = document.createElement('div');
+    div.className = 'timeslot rounded-xl border-2 border-cream-dark px-3 py-2 text-center text-sm font-medium' + (isUnavailable ? ' opacity-30 cursor-not-allowed bg-gray-50' : '');
+    div.textContent = slot;
+    if (!isUnavailable) {
+      div.onclick = () => {
+        document.querySelectorAll('.timeslot:not(.cursor-not-allowed)').forEach(s => s.classList.remove('selected'));
+        div.classList.add('selected');
+        selectedTime = slot;
+        document.getElementById('step2-next').disabled = false;
+      };
+    }
+    grid.appendChild(div);
+  });
+
+  document.getElementById('no-date-msg').classList.add('hidden');
+  document.getElementById('timeslots-container').classList.remove('hidden');
+}
+
+function submitBooking() {
+  const prenom = document.getElementById('b-prenom').value.trim();
+  const nom = document.getElementById('b-nom').value.trim();
+  const tel = document.getElementById('b-tel').value.trim();
+  const email = document.getElementById('b-email').value.trim();
+
+  if (!prenom || !nom || !tel || !email) {
+    alert('Veuillez remplir tous les champs obligatoires (*)');
+    return;
+  }
+
+  const btn = document.getElementById('submit-text');
+  const spinner = document.getElementById('submit-spinner');
+  btn.textContent = 'Envoi en cours...';
+  spinner.classList.remove('hidden');
+
+  setTimeout(() => {
+    const date = document.getElementById('booking-date').value;
+    const dateFormatted = new Date(date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+    document.getElementById('cs-service').textContent = selectedService.name;
+    document.getElementById('cs-date').textContent = dateFormatted;
+    document.getElementById('cs-heure').textContent = selectedTime;
+    document.getElementById('cs-prix').textContent = selectedService.price;
+    document.getElementById('confirm-message').textContent = `Bonjour ${prenom}, votre rendez-vous a bien été enregistré. Vous recevrez un SMS de confirmation sous peu.`;
+
+    goToStep(4);
+    btn.textContent = 'Confirmer la réservation';
+    spinner.classList.add('hidden');
+  }, 1500);
+}
+
+function resetBooking() {
+  selectedService = null;
+  selectedTime = null;
+  document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('b-prenom').value = '';
+  document.getElementById('b-nom').value = '';
+  document.getElementById('b-tel').value = '';
+  document.getElementById('b-email').value = '';
+  document.getElementById('b-notes').value = '';
+  document.getElementById('booking-date').value = '';
+  document.getElementById('timeslots-container').classList.add('hidden');
+  document.getElementById('no-date-msg').classList.remove('hidden');
+  document.getElementById('step1-next').disabled = true;
+  document.getElementById('step2-next').disabled = true;
+  goToStep(1);
+}
+
+function submitContact(e) {
+  e.preventDefault();
+  const btn = document.getElementById('contact-text');
+  btn.textContent = 'Envoi...';
+  setTimeout(() => {
+    document.getElementById('contact-success').classList.remove('hidden');
+    btn.textContent = 'Envoyer le Message';
+    e.target.reset();
+  }, 1200);
+}
+
+// Set min date to today
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('booking-date').min = today;
+</script>
+</body>
+</html>
